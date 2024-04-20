@@ -3,6 +3,7 @@ import time
 import numpy as np
 import NDIlib as ndi
 
+
 def main():
 
     if not ndi.initialize():
@@ -18,7 +19,7 @@ def main():
     video_frame = ndi.VideoFrameV2()
 
     video_frame.data = img
-    video_frame.FourCC = ndi.FOURCC_VIDEO_TYPE_BGRX
+    video_frame.FourCC = ndi.FourCCVideoType.BGRX
 
     start = time.time()
     while time.time() - start < 60 * 5:
@@ -28,13 +29,14 @@ def main():
             img.fill(255 if idx % 2 else 0)
             ndi.send_send_video_v2(ndi_send, video_frame)
 
-        print('200 frames sent, at %1.2ffps' % (200.0 / (time.time() - start_send)))
+        print("200 frames sent, at %1.2ffps" % (200.0 / (time.time() - start_send)))
 
     ndi.send_destroy(ndi_send)
 
     ndi.destroy()
 
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

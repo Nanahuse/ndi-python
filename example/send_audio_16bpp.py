@@ -6,11 +6,11 @@ import NDIlib as ndi
 def main():
 
     if not ndi.initialize():
-        print('Cannot run NDI.')
+        print("Cannot run NDI.")
         return 0
 
     send_create_desc = ndi.SendCreate()
-    send_create_desc.ndi_name = 'My 16bpp Audio'
+    send_create_desc.ndi_name = "My 16bpp Audio"
     send_create_desc.clock_audio = True
 
     ndi_send = ndi.send_create(send_create_desc)
@@ -26,7 +26,7 @@ def main():
     for i in range(1000):
         audio_frame.data = np.zeros((4, 1920), dtype=np.int16)
         ndi.util_send_send_audio_interleaved_16s(ndi_send, audio_frame)
-        print('Frame number %d sent.' % i)
+        print("Frame number %d sent." % i)
 
     ndi.send_destroy(ndi_send)
 

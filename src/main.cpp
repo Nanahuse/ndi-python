@@ -11,44 +11,38 @@ PYBIND11_MODULE(NDIlib, m) {
 
   // Processing.NDI.structs
   py::enum_<NDIlib_frame_type_e>(m, "FrameType", py::arithmetic())
-      .value("FRAME_TYPE_NONE", NDIlib_frame_type_none)
-      .value("FRAME_TYPE_VIDEO", NDIlib_frame_type_video)
-      .value("FRAME_TYPE_AUDIO", NDIlib_frame_type_audio)
-      .value("FRAME_TYPE_METADATA", NDIlib_frame_type_metadata)
-      .value("FRAME_TYPE_ERROR", NDIlib_frame_type_error)
-      .value("FRANE_TYPE_STATUS_CHANGE", NDIlib_frame_type_status_change)
-      .value("FRAME_TYPE_MAX", NDIlib_frame_type_max)
-      .export_values();
+      .value("NONE", NDIlib_frame_type_none)
+      .value("VIDEO", NDIlib_frame_type_video)
+      .value("AUDIO", NDIlib_frame_type_audio)
+      .value("METADATA", NDIlib_frame_type_metadata)
+      .value("ERROR", NDIlib_frame_type_error)
+      .value("STATUS_CHANGE", NDIlib_frame_type_status_change)
+      .value("MAX", NDIlib_frame_type_max);
 
   py::enum_<NDIlib_FourCC_video_type_e>(m, "FourCCVideoType", py::arithmetic())
-      .value("FOURCC_VIDEO_TYPE_UYVY", NDIlib_FourCC_video_type_UYVY)
-      .value("FOURCC_VIDEO_TYPE_UYVA", NDIlib_FourCC_video_type_UYVA)
-      .value("FOURCC_VIDEO_TYPE_P216", NDIlib_FourCC_video_type_P216)
-      .value("FOURCC_VIDEO_TYPE_PA16", NDIlib_FourCC_video_type_PA16)
-      .value("FOURCC_VIDEO_TYPE_YV12", NDIlib_FourCC_video_type_YV12)
-      .value("FOURCC_VIDEO_TYPE_I420", NDIlib_FourCC_video_type_I420)
-      .value("FOURCC_VIDEO_TYPE_NV12", NDIlib_FourCC_video_type_NV12)
-      .value("FOURCC_VIDEO_TYPE_BGRA", NDIlib_FourCC_video_type_BGRA)
-      .value("FOURCC_VIDEO_TYPE_BGRX", NDIlib_FourCC_video_type_BGRX)
-      .value("FOURCC_VIDEO_TYPE_RGBA", NDIlib_FourCC_video_type_RGBA)
-      .value("FOURCC_VIDEO_TYPE_RGBX", NDIlib_FourCC_video_type_RGBX)
-      .value("FOURCC_VIDEO_TYPE_MAX", NDIlib_FourCC_video_type_max)
-      .export_values();
+      .value("UYVY", NDIlib_FourCC_video_type_UYVY)
+      .value("UYVA", NDIlib_FourCC_video_type_UYVA)
+      .value("P216", NDIlib_FourCC_video_type_P216)
+      .value("PA16", NDIlib_FourCC_video_type_PA16)
+      .value("YV12", NDIlib_FourCC_video_type_YV12)
+      .value("I420", NDIlib_FourCC_video_type_I420)
+      .value("NV12", NDIlib_FourCC_video_type_NV12)
+      .value("BGRA", NDIlib_FourCC_video_type_BGRA)
+      .value("BGRX", NDIlib_FourCC_video_type_BGRX)
+      .value("RGBA", NDIlib_FourCC_video_type_RGBA)
+      .value("RGBX", NDIlib_FourCC_video_type_RGBX)
+      .value("MAX", NDIlib_FourCC_video_type_max);
 
   py::enum_<NDIlib_FourCC_audio_type_e>(m, "FourCCAudioType", py::arithmetic())
-      .value("FOURCC_AUDIO_TYPE_FLTP", NDIlib_FourCC_audio_type_FLTP)
-      .value("FOURCC_AUDIO_TYPE_MAX", NDIlib_FourCC_audio_type_max)
-      .export_values();
+      .value("FLTP", NDIlib_FourCC_audio_type_FLTP)
+      .value("MAX", NDIlib_FourCC_audio_type_max);
 
   py::enum_<NDIlib_frame_format_type_e>(m, "FrameFormatType", py::arithmetic())
-      .value("FRAME_FORMAT_TYPE_PROGRESSIVE",
-             NDIlib_frame_format_type_progressive)
-      .value("FRAME_FORMAT_TYPE_INTERLEAVED",
-             NDIlib_frame_format_type_interleaved)
-      .value("FRAME_FORMAT_TYPE_FIELD_0", NDIlib_frame_format_type_field_0)
-      .value("FRAME_FORMAT_TYPE_FIELD_1", NDIlib_frame_format_type_field_1)
-      .value("FRAME_FORMAT_TYPE_MAX", NDIlib_frame_format_type_max)
-      .export_values();
+      .value("PROGRESSIVE", NDIlib_frame_format_type_progressive)
+      .value("INTERLEAVED", NDIlib_frame_format_type_interleaved)
+      .value("FIELD_0", NDIlib_frame_format_type_field_0)
+      .value("FIELD_1", NDIlib_frame_format_type_field_1)
+      .value("MAX", NDIlib_frame_format_type_max);
 
   m.attr("SEND_TIMECODE_SYNTHESIZE") = py::int_(INT64_MAX);
 
@@ -313,6 +307,8 @@ PYBIND11_MODULE(NDIlib, m) {
             self.p_extra_ips = strs[&self].c_str();
           });
 
+  py::class_<NDIlib_find_instance_t>(m, "FindInstance");
+
   m.def(
       "find_create_v2",
       [](const NDIlib_find_create_t *p_create_settings) {
@@ -355,35 +351,27 @@ PYBIND11_MODULE(NDIlib, m) {
 
   // Processing.NDI.Recv
   py::enum_<NDIlib_recv_bandwidth_e>(m, "RecvBandwidth", py::arithmetic())
-      .value("RECV_BANDWIDTH_METADATA_ONLY",
-             NDIlib_recv_bandwidth_metadata_only)
-      .value("RECV_BANDWIDTH_AUDIO_ONLY", NDIlib_recv_bandwidth_audio_only)
-      .value("RECV_BANDWIDTH_LOWEST", NDIlib_recv_bandwidth_lowest)
-      .value("RECV_BANDWIDTH_HIGHEST", NDIlib_recv_bandwidth_highest)
-      .value("RECV_BANDWIDTH_MAX", NDIlib_recv_bandwidth_max)
-      .export_values();
+      .value("METADATA_ONLY", NDIlib_recv_bandwidth_metadata_only)
+      .value("AUDIO_ONLY", NDIlib_recv_bandwidth_audio_only)
+      .value("LOWEST", NDIlib_recv_bandwidth_lowest)
+      .value("HIGHEST", NDIlib_recv_bandwidth_highest)
+      .value("MAX", NDIlib_recv_bandwidth_max);
 
   py::enum_<NDIlib_recv_color_format_e>(m, "RecvColorFormat", py::arithmetic())
-      .value("RECV_COLOR_FORMAT_BGRX_BGRA", NDIlib_recv_color_format_BGRX_BGRA)
-      .value("RECV_COLOR_FORMAT_UYVY_BGRA", NDIlib_recv_color_format_UYVY_BGRA)
-      .value("RECV_COLOR_FORMAT_RGBX_RGBA", NDIlib_recv_color_format_RGBX_RGBA)
-      .value("RECV_COLOR_FORMAT_UYVY_RGBA", NDIlib_recv_color_format_UYVY_RGBA)
-      .value("RECV_COLOR_FORMAT_FASTEST", NDIlib_recv_color_format_fastest)
-      .value("RECV_COLOR_FORMAT_BEST", NDIlib_recv_color_format_best)
-      .value("RECV_COLOR_FORMAT_E_BGRX_BGRA",
-             NDIlib_recv_color_format_e_BGRX_BGRA)
-      .value("RECV_COLOR_FORMAT_E_UYVY_BGRA",
-             NDIlib_recv_color_format_e_UYVY_BGRA)
-      .value("RECV_COLOR_FORMAT_E_RGBX_RGBA",
-             NDIlib_recv_color_format_e_RGBX_RGBA)
-      .value("RECV_COLOR_FORMAT_E_UYVY_RGBA",
-             NDIlib_recv_color_format_e_UYVY_RGBA)
+      .value("BGRX_BGRA", NDIlib_recv_color_format_BGRX_BGRA)
+      .value("UYVY_BGRA", NDIlib_recv_color_format_UYVY_BGRA)
+      .value("RGBX_RGBA", NDIlib_recv_color_format_RGBX_RGBA)
+      .value("UYVY_RGBA", NDIlib_recv_color_format_UYVY_RGBA)
+      .value("FASTEST", NDIlib_recv_color_format_fastest)
+      .value("BEST", NDIlib_recv_color_format_best)
+      .value("E_BGRX_BGRA", NDIlib_recv_color_format_e_BGRX_BGRA)
+      .value("E_UYVY_BGRA", NDIlib_recv_color_format_e_UYVY_BGRA)
+      .value("E_RGBX_RGBA", NDIlib_recv_color_format_e_RGBX_RGBA)
+      .value("E_UYVY_RGBA", NDIlib_recv_color_format_e_UYVY_RGBA)
 #ifdef _WIN32
-      .value("RECV_COLOR_FORMAT_BGRX_BGRA_FLIPPED",
-             NDIlib_recv_color_format_BGRX_BGRA_flipped)
+      .value("BGRX_BGRA_FLIPPED", NDIlib_recv_color_format_BGRX_BGRA_flipped)
 #endif
-      .value("RECV_COLOR_FORMAT_MAX", NDIlib_recv_color_format_max)
-      .export_values();
+      .value("MAX", NDIlib_recv_color_format_max);
 
   py::class_<NDIlib_recv_create_v3_t>(m, "RecvCreateV3")
       .def(py::init<const NDIlib_source_t, NDIlib_recv_color_format_e,
@@ -426,6 +414,8 @@ PYBIND11_MODULE(NDIlib, m) {
       .def_readwrite("video_frames", &NDIlib_recv_queue_t::video_frames)
       .def_readwrite("audio_frames", &NDIlib_recv_queue_t::audio_frames)
       .def_readwrite("metadata_frames", &NDIlib_recv_queue_t::metadata_frames);
+
+  py::class_<NDIlib_recv_instance_t>(m, "RecvInstance");
 
   m.def(
       "recv_create_v3",
@@ -895,6 +885,8 @@ PYBIND11_MODULE(NDIlib, m) {
       .def_readwrite("clock_video", &NDIlib_send_create_t::clock_video)
       .def_readwrite("clock_audio", &NDIlib_send_create_t::clock_audio);
 
+  py::class_<NDIlib_send_instance_t>(m, "SendInstance");
+
   m.def(
       "send_create",
       [](const NDIlib_send_create_t *p_create_settings) {
@@ -1063,6 +1055,8 @@ PYBIND11_MODULE(NDIlib, m) {
             strs[&self] = py::str(groups);
             self.p_groups = strs[&self].c_str();
           });
+
+  py::class_<NDIlib_routing_instance_t>(m, "RoutingInstance");
 
   m.def(
       "routing_create",
@@ -1286,6 +1280,8 @@ PYBIND11_MODULE(NDIlib, m) {
 
   // Processing.NDI.deprecated
   // TODO
+
+  py::class_<NDIlib_framesync_instance_t>(m, "FrameSyncInstance");
 
   // Processing.NDI.FrameSync
   m.def(

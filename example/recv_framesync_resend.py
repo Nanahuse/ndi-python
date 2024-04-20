@@ -16,7 +16,7 @@ def main():
 
     sources = []
     while not len(sources) > 0:
-        print('Looking for sources ...')
+        print("Looking for sources ...")
         ndi.find_wait_for_sources(ndi_find, 1000)
         sources = ndi.find_get_current_sources(ndi_find)
 
@@ -47,14 +47,13 @@ def main():
             current_time += (v.frame_rate_D * 480000) / v.frame_rate_N
             ndi.framesync_free_video(ndi_framesync, v)
             no_audio_samples = (current_time + 5) / 10 - (frame_start + 5) / 10
-            a = ndi.framesync_capture_audio(
-                ndi_framesync, 48000, 4, int(no_audio_samples))
+            a = ndi.framesync_capture_audio(ndi_framesync, 48000, 4, int(no_audio_samples))
             ndi.send_send_audio_v2(ndi_send, a)
             ndi.framesync_free_audio(ndi_framesync, a)
         else:
-            time.sleep(33/1000)
+            time.sleep(33 / 1000)
 
-    ndi.framesync_destoroy(ndi_framesync)
+    ndi.framesync_destroy(ndi_framesync)
 
     ndi.recv_destroy(ndi_recv)
 

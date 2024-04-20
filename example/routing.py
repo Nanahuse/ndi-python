@@ -3,14 +3,15 @@ import time
 import random
 import NDIlib as ndi
 
+
 def main():
 
     if not ndi.initialize():
-        print('Cannot run NDI.')
+        print("Cannot run NDI.")
         return 0
 
     send_create_desc = ndi.RoutingCreate()
-    send_create_desc.ndi_name = 'Routing'
+    send_create_desc.ndi_name = "Routing"
 
     ndi_routing = ndi.routing_create(send_create_desc)
 
@@ -27,7 +28,7 @@ def main():
         sources = ndi.find_get_current_sources(ndi_find)
         if len(sources) > 0:
             new_source = random.choice(sources)
-            print('routing to %s' % new_source.ndi_name)
+            print("routing to %s" % new_source.ndi_name)
             ndi.routing_change(ndi_routing, new_source)
         else:
             ndi.routing_clear(ndi_routing)
@@ -39,6 +40,7 @@ def main():
     ndi.destroy()
 
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

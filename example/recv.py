@@ -15,12 +15,12 @@ def main():
 
     sources = []
     while not len(sources) > 0:
-        print('Looking for sources ...')
+        print("Looking for sources ...")
         ndi.find_wait_for_sources(ndi_find, 1000)
         sources = ndi.find_get_current_sources(ndi_find)
 
     ndi_recv_create = ndi.RecvCreateV3()
-    ndi_recv_create.color_format = ndi.RECV_COLOR_FORMAT_BGRX_BGRA
+    ndi_recv_create.color_format = ndi.RecvColorFormat.BGRX_BGRA
 
     ndi_recv = ndi.recv_create_v3(ndi_recv_create)
 
@@ -34,17 +34,17 @@ def main():
     while True:
         t, v, a, _ = ndi.recv_capture_v2(ndi_recv, 5000)
 
-        if t == ndi.FRAME_TYPE_NONE:
-            print('No data received.')
+        if t == ndi.FrameType.NONE:
+            print("No data received.")
             continue
 
-        if t == ndi.FRAME_TYPE_VIDEO:
-            print('Video data received (%dx%d).' % (v.xres, v.yres))
+        if t == ndi.FrameType.VIDEO:
+            print("Video data received (%dx%d)." % (v.xres, v.yres))
             ndi.recv_free_video_v2(ndi_recv, v)
             continue
 
-        if t == ndi.FRAME_TYPE_AUDIO:
-            print('Audio data received (%d samples).' % a.no_samples)
+        if t == ndi.FrameType.AUDIO:
+            print("Audio data received (%d samples)." % a.no_samples)
             ndi.recv_free_audio_v2(ndi_recv, a)
             continue
 
